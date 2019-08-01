@@ -1,0 +1,14 @@
+#Requires -RunAsAdministrator
+
+Import-Module -Name "Hyper-V"
+
+Write-Host "Running VMs"
+
+Get-VM -VMName "*" | Format-Table Name
+$running = Get-VM -VMName "*" | Format-Table Name
+
+Write-Host "Current vCPU core count"
+
+ForEach-Object $running {
+    Get-VMProcessor -VMName $_.
+}
