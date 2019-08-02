@@ -4,11 +4,11 @@ Import-Module -Name "Hyper-V"
 
 Write-Host "Running VMs"
 
-Get-VM -VMName "*" | Format-Table Name
-$running = Get-VM -VMName "*" | Format-Table Name
+Get-VM -VMName "*" | Where-Object -Property State -EQ "Running" | Format-Table Name
+$running = Get-VM -VMName "*" | Where-Object -Property State -EQ "Running" | Select-Object -ExpandProperty Name
 
 Write-Host "Current vCPU core count"
 
-ForEach-Object $running {
-    Get-VMProcessor -VMName $_.
+ForEach ($vm in $running) {
+    Get-VMProcessor -VMName $vm
 }
