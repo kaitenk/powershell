@@ -16,7 +16,7 @@ Invoke-Command -ComputerName jager -ScriptBlock {
 
 $running = Get-VM -VMName "*" -ComputerName jager | Where-Object -Property State -EQ "Running" | Select-Object -ExpandProperty Name
 
-Write-Host "Storage used by VHD"
+Write-Host "Storage used by VHDs"
 
 ForEach ($vm in $running) {
     $VHDs = Get-VMHardDiskDrive -VMName $vm -ComputerName jager | Select-Object -ExpandProperty Path 
