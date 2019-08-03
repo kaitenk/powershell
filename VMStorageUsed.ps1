@@ -20,7 +20,5 @@ Write-Host "Storage used by VHD"
 
 ForEach ($vm in $running) {
     $VHDs = Get-VMHardDiskDrive -VMName $vm -ComputerName jager | Select-Object -ExpandProperty Path 
-    # $VHDSize = Get-VHD -Path $VHDs -ComputerName jager | Select-Object Path, @{Name="Size";Expression = {$_.FileSize/1gb}}
     Get-VHD -Path $VHDs -ComputerName jager | Select-Object Path, @{Name="Size";Expression = {$_.FileSize/1gb}}
-    # Out-Host -InputObject $VHDSize
     }
