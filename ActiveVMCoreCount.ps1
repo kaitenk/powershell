@@ -7,5 +7,5 @@ $running = Get-VM -VMName "*" | Where-Object -Property State -EQ "Running" | Sel
 Write-Host "Current vCPU core count of running VMs"
 
 ForEach ($vm in $running) {
-    Get-VMProcessor -VMName $vm -ComputerName | Select-Object -Property VMName, Count
+    Get-VMProcessor -VMName $vm | Select-Object -Property VMName, Count
 }

@@ -10,7 +10,7 @@ Out-Host -InputObject $currentRAMUsageVM
 
 Write-Host "Current RAM usage of hypervisor"
 
-$OS = Get-CimInstance Win32_OperatingSystem -ComputerName
+$OS = Get-CimInstance Win32_OperatingSystem
 $totalMemory = $os.TotalVisibleMemorySize/1mb
 $freeMemory = $os.FreePhysicalMemory/1mb
 $usedMemory = $totalMemory-$freeMemory
