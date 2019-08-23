@@ -14,7 +14,7 @@ Invoke-Command -ScriptBlock {
     Write-Host $vmStorageFree.ToString("#.#")  "/"  $vmStorageTotal.ToString("#.#")GB
 }
 
-$running = Get-VM -VMName "*" | Where-Object -Property State -EQ "Running" | Select-Object -ExpandProperty Name
+$running = Get-VM | Where-Object -Property State -EQ "Running" | Select-Object -ExpandProperty Name
 
 Write-Host "Storage used by VHDs"
 
