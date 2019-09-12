@@ -9,6 +9,11 @@ Write-Host "WARNING: THIS INVOLVES CREATING A KDS ROOT KEY ON ALL DOMAIN CONTROL
 Write-Host "If you do not know what this, close this window and search KDS for gMSAs" -BackgroundColor White -ForegroundColor Red
 
 Write-Host "Do you wish to continue? y / n " -BackgroundColor White -ForegroundColor Red 
+
+Write-Host "Alright let's do this!"
+
+$DCs = Get-ADDomainController -Filter * | Select-Object -ExpandProperty Name
+
 $disclosure = Read-Host
 switch ($disclosure) {
     Y {
@@ -23,6 +28,20 @@ switch ($disclosure) {
         Write-Host "No input detected, no changes enacted" -BackgroundColor White -ForegroundColor Red 
         Break}
     }
+
+Write-Host  "Making KDS Root Key now!"
+Write-Host $DCs "are your current reachable domain controllers"
+if ($env:COMPUTERNAME -ile $DCs) {
+    Get-KdsConfiguration -Verbose
+    Get-KdsRootKey -Verbose
+    Add-KdsRootKey –EffectiveTime ((get-date).addhours(-10)) -Verbose
+    Get-KdsConfiguration -Verbose
+    Get-KdsRootKey -Verbose
+} 
+else {
+    Write-Host "You are not on a domain controller, stopping"
+    Break
+}
 
 $username = @(Read-Host "Enter the username of the account you want to create")
 
@@ -44,10 +63,8 @@ switch ($multipleComp) {
     Default {Write-Host "Input invalid, continuing on..."}
 }
 
-# $password = Get-Credential -Message ""
-
 Write-Host "Attempting to create managed service account(s) now!"
 
 ForEach ($user in $username) {
-    New-ADServiceAccount -Name $user -DisplayName $user -Verbose
+    New-ADServiceAccount -Name $user -DisplayName $user -DNSHostName $user -Verbose -Enabled
 }
