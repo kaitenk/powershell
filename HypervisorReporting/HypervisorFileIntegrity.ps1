@@ -19,13 +19,3 @@ else {
     Write-Host "The PowerShellScripts folder was not found in C:\."
     Pause
 }
-# if ($integrityCheck) {
-#     $integrityCheck = Get-ChildItem -Path $scriptFolder
-#     $scriptNames = "VMStorageUsed"."ActiveRAMUsage","ActiveVMCoreCount"
-
-#     if ($integrityCheck -ne $scriptNames) {
-#         Write-Host "There are some files missing in the PowerShell Folder in C:\"
-#         Break
-#     }
-#     Write-Host "The PowerShellScripts folder was not found in C:\."
-# }
